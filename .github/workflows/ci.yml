@@ -32,6 +32,24 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+
+      - name: Download Ninja
+        id: cmake_and_ninja
+        shell: cmake -P {0}
+        run: |
+          set(ninja_version "1.9.0")
+
+          message(STATUS "Using host CMake version: ${CMAKE_VERSION}")
+
+          set(ninja_suffix "linux.zip")
+          set(cmake_suffix "Linux-x86_64.tar.gz")
+          set(ninja_url "https://github.com/ninja-build/ninja/releases/download/v${ninja_version}/ninja-${ninja_suffix}")
+          file(DOWNLOAD "${ninja_url}" ./ninja.zip SHOW_PROGRESS)
+          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ninja.zip)
+          execute_process(
+            COMMAND chmod +x ninja
+          )
+
       - name: Configure
         shell: cmake -P {0}
         run: |
