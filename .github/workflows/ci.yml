@@ -34,8 +34,6 @@ jobs:
           ls ${{ github.workspace }}
           
 
-
-        # --- взято из: https://temofeev.ru/info/articles/ispolzovanie-github-actions-s-c-i-cmake/
         - name: Configure
           shell: cmake -P {0}
           run: |
@@ -57,56 +55,4 @@ jobs:
               message(FATAL_ERROR "Bad exit status")
             endif()          
           
-        - name: Build
-          shell: cmake -P {0}
-          run: |
-            set(ENV{NINJA_STATUS} "[%f/%t %o/sec] ")
 
-            execute_process(
-              COMMAND ${ { steps.cmake_and_ninja.outputs.cmake_dir } }/cmake --build build
-              RESULT_VARIABLE result
-            )
-            if (NOT result EQUAL 0)
-              message(FATAL_ERROR "Bad exit status")
-            endif()          
-          
-          
-
-# - name: Test
-#   shell: cmake -P {0}
-#   run: |
-#     include(ProcessorCount)
-#     ProcessorCount(N)
-
-#     execute_process(
-#       COMMAND ${ { steps.cmake_and_ninja.outputs.cmake_dir } }/ctest -j ${N}
-#       WORKING_DIRECTORY build
-#       RESULT_VARIABLE result
-#     )
-#     if (NOT result EQUAL 0)
-#       message(FATAL_ERROR "Running tests failed!")
-#     endif()
-
-# UploadArtifacts
-
-        # run: cmake task5/ -G "What a cmd G switch?"
-          
-          
-      # - run: echo "This job's status is ${{ job.status }}."    
-    
-    
-    
-    
-    
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      # --- - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      # --- - name: Build
-      # ---   run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      # --- - name: Run a multi-line script
-      # ---   run: |
-      # ---     echo Add other actions to build,
-      # ---     echo test, and deploy your project.
