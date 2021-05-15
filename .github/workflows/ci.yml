@@ -56,7 +56,7 @@ jobs:
         working-directory: ./build
         run: |
           execute_process(
-            COMMAND make
+            COMMAND make install
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
