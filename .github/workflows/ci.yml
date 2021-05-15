@@ -51,6 +51,7 @@ jobs:
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad 'CMAKE' status")
           endif()
+          cd build
           execute_process(
             COMMAND make
             RESULT_VARIABLE result
@@ -58,6 +59,7 @@ jobs:
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad 'MAKE' status")
           endif()
+          cd ..
       - name: List files in build dir
         run: |
           ls -R ${{ github.workspace }}/build
