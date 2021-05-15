@@ -45,11 +45,25 @@ jobs:
         shell: cmake -P {0}
         run: |
           execute_process(
-            COMMAND cmake --install install -S task5 -B build -DCMAKE_BUILD_TYPE=Release -DGOOGLE_TEST_DIR=googletest
+            COMMAND cmake -S task5 -B build -DCMAKE_BUILD_TYPE=Release -DGOOGLE_TEST_DIR=googletest
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Bad 'CMAKE' status")
+            message(FATAL_ERROR "Bad 'CMAKE-1' status")
+          endif()
+          execute_process(
+            COMMAND cmake --build build
+            RESULT_VARIABLE result
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad 'CMAKE-2' status")
+          endif()
+          execute_process(
+            COMMAND cmake --install install
+            RESULT_VARIABLE result
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad 'CMAKE-3' status")
           endif()
       - name: List files in build dir
         run: |
