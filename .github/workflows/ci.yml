@@ -43,29 +43,14 @@ jobs:
           mkdir install
           ls -R ${{ github.workspace }}
       - name: Build
-        shell: cmake -P {0}
         run: |
-          execute_process(
-            COMMAND cmake -S task5 -B build -DCMAKE_INSTALL_PREFIX=tmp -DCMAKE_BUILD_TYPE=Release -DGOOGLE_TEST_DIR=googletest
-            RESULT_VARIABLE result
-          )
-          if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Bad 'CMAKE-1' status")
-          endif()
-          execute_process(
-            COMMAND cd build && make
-            RESULT_VARIABLE result
-          )
-          if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Bad 'MAKE' status")
-          endif()
-          execute_process(
-            COMMAND cd build && make install
-            RESULT_VARIABLE result
-          )
-          if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Bad 'MAKE-I' status")
-          endif()
+          cmake -S task5 -B build -DCMAKE_INSTALL_PREFIX=tmp -DCMAKE_BUILD_TYPE=Release -DGOOGLE_TEST_DIR=googletest
+          echo "CMAKE Ok"
+          cd build
+          make
+          echo "MAKE Ok"
+          make install
+          echo "MAKE-I Ok"
       - name: Test
         uses: akhtyamovpavel/ActionGtestReport@v0.0.9
         with:
