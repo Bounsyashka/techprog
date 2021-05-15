@@ -67,9 +67,10 @@ jobs:
           endif()
       - name: Test
         uses: akhtyamovpavel/ActionGtestReport@v0.0.9
-        exec-path: bin/CTestExe
-        report-path: report.xml
-        working-directory: task5/      
+        with:
+          exec-path: bin/CTestExe
+          report-path: report.xml
+          working-directory: task5/      
       - name: List files in build dir
         run: |
           ls -R ${{ github.workspace }}/build
