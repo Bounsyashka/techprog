@@ -36,13 +36,24 @@ jobs:
       - name: Build
         shell: cmake -P {0}
         run: |
-          mkdir "--parents ../myapp-release"
-          cd "../myapp-release"
+          execute_process(
+            mkdir
+            ${{ github.workspace }}/build
+          )
+          execute_process(
+            cd
+            ${{ github.workspace }}/build
+          )
           # Сконфигурируем проект для сборки в Release.
           # Флаг установит опцию CMAKE_BUILD_TYPE в значение "Release",
           #  интерпретатор cmake считает это переключением на Release конфигурацию.
-          cmake "-DCMAKE_BUILD_TYPE=Release ../myapp"
-          cmake "--build ."
+          )
+          execute_process(
+            cmake -DCMAKE_BUILD_TYPE=Release ${{ github.workspace }}/task5
+          )
+          execute_process(
+            cmake --build ${{ github.workspace }}/task5
+          )
         
           # file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/ninja" ninja_program)
           # execute_process(
