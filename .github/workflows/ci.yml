@@ -31,7 +31,13 @@ jobs:
       - name: Clone GoogleTest
         shell: cmake -P {0}
         run: |
-          git clone git@github.com:google/googletest.git 3rdparty/googletest
+          execute_process(
+            COMMAND git clone git@github.com:google/googletest.git 3rdparty/googletest
+            RESULT_VARIABLE result
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad 'git clone' status")
+          endif()
       - name: List files in the repository
         run: |
           ls -R ${{ github.workspace }}
@@ -43,6 +49,6 @@ jobs:
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Bad exit status")
+            message(FATAL_ERROR "Bad 'cmake' status")
           endif()
 
