@@ -45,7 +45,7 @@ jobs:
         shell: cmake -P {0}
         run: |
           execute_process(
-            COMMAND cmake -S task5 -B build -D CMAKE_BUILD_TYPE=Release -D GOOGLE_TEST_DIR=googletest
+            COMMAND cmake -S task5 -B build -DCMAKE_BUILD_TYPE=Release -DGOOGLE_TEST_DIR=googletest
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
