@@ -53,5 +53,4 @@ jobs:
           endif()
       - name: List files in build dir
         run: |
-          ls -R ${{ github.workspace }/build}
-
+          ls -R ${{ github.workspace }}/build
