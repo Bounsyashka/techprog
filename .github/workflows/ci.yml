@@ -51,4 +51,7 @@ jobs:
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad 'cmake' status")
           endif()
+      - name: List files in build dir
+        run: |
+          ls -R ${{ github.workspace }/build}
 
