@@ -33,40 +33,27 @@ jobs:
         run: |
           ls ${{ github.workspace }}
 
-      - name: Download Ninja
-        id: cmake_and_ninja
+      - name: Build
         shell: cmake -P {0}
         run: |
-          set(ninja_version "1.9.0")
-
-          message(STATUS "Using host CMake version: ${CMAKE_VERSION}")
-
-          set(ninja_suffix "linux.zip")
-          set(cmake_suffix "Linux-x86_64.tar.gz")
-          set(ninja_url "https://github.com/ninja-build/ninja/releases/download/v${ninja_version}/ninja-${ninja_suffix}")
-          file(DOWNLOAD "${ninja_url}" ./ninja.zip SHOW_PROGRESS)
-          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./ninja.zip)
-          
-          # Save the path for other steps
-          file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/${cmake_dir}" cmake_dir)
-
-          execute_process(
-            COMMAND chmod +x ninja
-          )
-
-      - name: Configure
-        shell: cmake -P {0}
-        run: |
-          file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/ninja" ninja_program)
-          execute_process(
-            COMMAND ${{steps.cmake_and_ninja.outputs.cmake_dir}}/cmake
-              -S .
-              -B build
-              -D CMAKE_BUILD_TYPE=Release
-              -G Ninja
-              -D CMAKE_MAKE_PROGRAM=${ninja_program}
-            RESULT_VARIABLE result
-          )
+          mkdir --parents ../myapp-release
+          cd ../myapp-release
+          # Сконфигурируем проект для сборки в Release.
+          # Флаг установит опцию CMAKE_BUILD_TYPE в значение "Release",
+          #  интерпретатор cmake считает это переключением на Release конфигурацию.
+          cmake -DCMAKE_BUILD_TYPE=Release ../myapp
+          cmake --build .
+        
+          # file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/ninja" ninja_program)
+          # execute_process(
+          #   COMMAND ${{steps.cmake_and_ninja.outputs.cmake_dir}}/cmake
+          #     -S .
+          #     -B build
+          #     -D CMAKE_BUILD_TYPE=Release
+          #     -G Ninja
+          #     -D CMAKE_MAKE_PROGRAM=${ninja_program}
+          #   RESULT_VARIABLE result
+          # )
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad exit status")
           endif()
