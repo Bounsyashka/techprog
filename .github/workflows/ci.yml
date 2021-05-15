@@ -47,21 +47,20 @@ jobs:
         run: |
           execute_process(
             COMMAND cmake -S task5 -B build -DCMAKE_INSTALL_PREFIX=tmp -DCMAKE_BUILD_TYPE=Release -DGOOGLE_TEST_DIR=googletest
-            #            && make install
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad 'CMAKE-1' status")
           endif()
           execute_process(
-            COMMAND make
+            COMMAND cd build && make
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad 'MAKE' status")
           endif()
           execute_process(
-            COMMAND make install
+            COMMAND cd build && make install
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
