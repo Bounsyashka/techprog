@@ -22,37 +22,32 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-        - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-        - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-        - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-        - name: Check out repository code
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
         uses: actions/checkout@v2
-        - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
-        - run: echo "The workflow is now ready to test your code on the runner."
-        - name: List files in the repository
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-          
-
-        - name: Configure
-          shell: cmake -P {0}
-          run: |
-            set(ENV{CC} "gcc")
-            set(ENV{CXX} "g++")
-
-            file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/ninja" ninja_program)
-
-            execute_process(
-              COMMAND ${ { steps.cmake_and_ninja.outputs.cmake_dir } }/cmake
-                -S .
-                -B build
-                -D CMAKE_BUILD_TYPE=Release
-                -G Ninja
-                -D CMAKE_MAKE_PROGRAM=${ninja_program}
-              RESULT_VARIABLE result
-            )
-            if (NOT result EQUAL 0)
-              message(FATAL_ERROR "Bad exit status")
-            endif()          
-          
+      - name: Configure
+        shell: cmake -P {0}
+        run: |
+          set(ENV{CC} "gcc")
+          set(ENV{CXX} "g++")
+          file(TO_CMAKE_PATH "$ENV{GITHUB_WORKSPACE}/ninja" ninja_program)
+          execute_process(
+            COMMAND ${ { steps.cmake_and_ninja.outputs.cmake_dir } }/cmake
+              -S .
+              -B build
+              -D CMAKE_BUILD_TYPE=Release
+              -G Ninja
+              -D CMAKE_MAKE_PROGRAM=${ninja_program}
+            RESULT_VARIABLE result
+          )
+          if (NOT result EQUAL 0)
+            message(FATAL_ERROR "Bad exit status")
+          endif()
 
