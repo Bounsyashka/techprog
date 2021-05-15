@@ -38,9 +38,7 @@ jobs:
         run: |
           execute_process(
             COMMAND ${{steps.cmake_and_ninja.outputs.cmake_dir}}/cmake
-              -S .
-              -B build
-              -D CMAKE_BUILD_TYPE=Release
+              --help
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
