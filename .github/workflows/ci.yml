@@ -54,9 +54,24 @@ jobs:
       - name: Test
         uses: akhtyamovpavel/ActionGtestReport@v0.0.9
         with:
+          working-directory: task5
           exec-path: bin/CTestExe
           report-path: report.xml
-          working-directory: task5/      
       - name: List files in build dir
         run: |
           ls -R ${{ github.workspace }}/build
+      - name: List files in source dir before pack
+        run: |
+          ls -R ${{ github.workspace }}/task5
+      - name: Pack
+        run: |
+          cmake -E tar -cvf bin_dir.tar task5/bin/
+          cmake -E tar -cvf lib_dir.tar task5/lib/
+      - name: List files in source dir after pack
+        run: |
+          ls -R ${{ github.workspace }}/task5
+      - name: UploadArtifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifacts
+          path: ./*.tar
