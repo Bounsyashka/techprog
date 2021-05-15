@@ -45,22 +45,11 @@ jobs:
         shell: cmake -P {0}
         run: |
           execute_process(
-            COMMAND cmake -S task5 -B build -DCMAKE_BUILD_TYPE=Release -DGOOGLE_TEST_DIR=googletest
+            COMMAND cmake --install install -S task5 -B build -DCMAKE_BUILD_TYPE=Release -DGOOGLE_TEST_DIR=googletest
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad 'CMAKE' status")
-          endif()
-      - name: Make
-        shell: cmake -P {0}
-        working-directory: ./build
-        run: |
-          execute_process(
-            COMMAND make install
-            RESULT_VARIABLE result
-          )
-          if (NOT result EQUAL 0)
-            message(FATAL_ERROR "Bad 'MAKE' status")
           endif()
       - name: List files in build dir
         run: |
