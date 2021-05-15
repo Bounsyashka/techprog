@@ -32,7 +32,7 @@ jobs:
         shell: cmake -P {0}
         run: |
           execute_process(
-            COMMAND git clone https://github.com/google/googletest.git task5/3rdparty/googletest
+            COMMAND git clone https://github.com/google/googletest.git 3rdparty/googletest
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
@@ -45,7 +45,7 @@ jobs:
         shell: cmake -P {0}
         run: |
           execute_process(
-            COMMAND cmake -S task5 -B task5/build -D CMAKE_BUILD_TYPE=Release -D GOOGLE_TEST_DIR=googletest
+            COMMAND cmake -S task5 -B build -D CMAKE_BUILD_TYPE=Release -D GOOGLE_TEST_DIR=googletest
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
