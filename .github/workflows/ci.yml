@@ -37,7 +37,7 @@ jobs:
         shell: cmake -P {0}
         run: |
           execute_process(
-            COMMAND cmake -S . -B build -D CMAKE_BUILD_TYPE=Release
+            COMMAND cmake -S task5 -B build -D CMAKE_BUILD_TYPE=Release
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
