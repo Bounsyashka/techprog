@@ -67,11 +67,11 @@ jobs:
         run: |
           cmake -E tar -cvf bin_dir.tar task5/bin/
           cmake -E tar -cvf lib_dir.tar task5/lib/
-      - name: List files in source dir after pack
+      - name: List files in work dir after pack
         run: |
-          ls -R ${{ github.workspace }}/task5
+          ls ${{ github.workspace }}
       - name: UploadArtifacts
         uses: actions/upload-artifact@v2
         with:
-          name: my-artifacts
+          name: executables
           path: ./*.tar
