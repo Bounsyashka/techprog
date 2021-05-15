@@ -52,7 +52,7 @@ jobs:
             message(FATAL_ERROR "Bad 'CMAKE' status")
           endif()
           execute_process(
-            COMMAND build/make
+            COMMAND make
             RESULT_VARIABLE result
           )
           if (NOT result EQUAL 0)
