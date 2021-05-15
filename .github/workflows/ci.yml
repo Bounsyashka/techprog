@@ -65,11 +65,11 @@ jobs:
           if (NOT result EQUAL 0)
             message(FATAL_ERROR "Bad 'CMAKE-3' status")
           endif()
-        - name: Test
-          uses: akhtyamovpavel/ActionGtestReport@v0.0.9
-          exec-path: bin/CTestExe
-          report-path: report.xml
-          working-directory: task5/      
+      - name: Test
+        uses: akhtyamovpavel/ActionGtestReport@v0.0.9
+        exec-path: bin/CTestExe
+        report-path: report.xml
+        working-directory: task5/      
       - name: List files in build dir
         run: |
           ls -R ${{ github.workspace }}/build
